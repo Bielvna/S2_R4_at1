@@ -1,0 +1,185 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: "2026"
+meta:
+  id: wrk_ee8c5d3e36fa4035802564f77683ad55
+  created: 1770139793389
+  modified: 1770139793389
+  description: ""
+collection:
+  - name: ManipularXML
+    meta:
+      id: fld_60150beb708441b58ad793e9f756b677
+      created: 1770139807312
+      modified: 1770140001614
+      sortKey: -1770139807312
+      description: ""
+  - name: Versionamento
+    meta:
+      id: fld_fd8762138fbc4d01b62accd6f005fdde
+      created: 1770738154786
+      modified: 1770738154786
+      sortKey: -1770738154786
+      description: ""
+  - name: Upload
+    meta:
+      id: fld_b0c001df1d8040de85f78bd21c70443a
+      created: 1770748329078
+      modified: 1770748329078
+      sortKey: -1770748329078
+      description: ""
+  - name: Atv-1
+    meta:
+      id: fld_94ca3ca7682f4b4e8f3ade2e892015a4
+      created: 1772539716838
+      modified: 1772539716838
+      sortKey: -1772539716838
+      description: ""
+  - name: Atividade31/03
+    meta:
+      id: fld_8f9f037190c44c7e96996682849b35c1
+      created: 1774964085886
+      modified: 1774964085886
+      sortKey: -1774964085886
+      description: ""
+  - name: ATV_07/04
+    meta:
+      id: fld_5f9330fed5e5447c9eb43ab54fc74cd7
+      created: 1775583073098
+      modified: 1775583076316
+      sortKey: -1775583073098
+      description: ""
+  - name: S1_R3_R4 - AT4_PBE 2
+    meta:
+      id: fld_1a005f326e9f47e891a49262a9fb5bc2
+      created: 1777983701156
+      modified: 1777983701156
+      sortKey: -1777983701156
+      description: ""
+    children:
+      - url: localhost:8000/pedidos/3
+        name: New Request
+        meta:
+          id: req_feae2a8e60ee43238d8353a99f2b61d3
+          created: 1777983706877
+          modified: 1777997154471
+          isPrivate: false
+          description: ""
+          sortKey: -1777983706877
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8000/pedidos/3
+        name: New Request
+        meta:
+          id: req_615f84ee5a804cc39a7e68804066e652
+          created: 1777983719186
+          modified: 1777997106155
+          isPrivate: false
+          description: ""
+          sortKey: -1777983719186
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "status": "Finalizado"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8000/pedidos
+        name: New Request
+        meta:
+          id: req_dd8a2ac065fc4b4dbc369bca7dc60fde
+          created: 1777983721199
+          modified: 1777996462171
+          isPrivate: false
+          description: ""
+          sortKey: -1777983721199
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"clienteId":21,
+            	"itens":[
+            		{"produtoId":3, "quantidade":1, "valorItem":100},
+            		{"produtoId":2, "quantidade":2, "valorItem":14.80}
+            ]
+
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8000/pedidos
+        name: New Request
+        meta:
+          id: req_2897189d82004822b36e71b05b04c3a3
+          created: 1777983723372
+          modified: 1777996523681
+          isPrivate: false
+          description: ""
+          sortKey: -1777983723372
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.5.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_1f80925c6705650236ce366ce813300c93a04144
+    created: 1770139793437
+    modified: 1770139793437
+environments:
+  name: Base Environment
+  meta:
+    id: env_1f80925c6705650236ce366ce813300c93a04144
+    created: 1770139793426
+    modified: 1770139793426
+    isPrivate: false
