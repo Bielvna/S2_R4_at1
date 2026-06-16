@@ -1,48 +1,50 @@
-import mysql from "mysql2/promise";
-import dotenv from "dotenv";
+ import mysql from 'mysql2/promise';
+import dotenv from 'dotenv';
 
-dotenv.config();
 
+// Singleton para a conexão com o banco de dados
 class Database {
     static #instance = null;
-    #pool;
+    #pool = null;
 
-    constructor() {
-        this.#createPool();
-    }
 
     #createPool() {
         this.#pool = mysql.createPool({
-            host: process.env.DB_HOST || "localhost",
-            user: process.env.DB_USER || "root",
-            password: process.env.DB_PASSWORD || "",
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
             database: process.env.DB_DATABASE,
-            port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
+            port: process.env.DB_PORT,
             waitForConnections: true,
-            connectionLimit: 10,
-            queueLimit: 0
+            connectionLimit: 100,
+            queueLimit: 0,
+            ssl: {
+                rejectUnauthorized: false
+            }
         });
     }
+
 
     static getInstance() {
         if (!Database.#instance) {
             Database.#instance = new Database();
+            Database.#instance.#createPool();
         }
         return Database.#instance;
     }
+
 
     getPool() {
         return this.#pool;
     }
 }
 
-const connection = Database.getInstance().getPool();
 
-export { connection };
+export const connection = Database.getInstance().getPool();
+
 
 export async function initializeDatabase() {
     console.log("Inicializando o banco de dados e tabelas...");
-
     try {
         const tempConnection = await mysql.createConnection({
             host: process.env.DB_HOST,
@@ -52,7 +54,9 @@ export async function initializeDatabase() {
             ssl: { rejectUnauthorized: false }
         });
 
-        const dbName = process.env.DB_DATABASE || 'S2_R4_at1';
+
+        const dbName = process.env.DB_DATABASE || 'atividade';
+
 
         await tempConnection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\`;`);
         await tempConnection.query(`USE \`${dbName}\`;`);
@@ -134,11 +138,14 @@ export async function initializeDatabase() {
             );
         `);
 
-        await tempConnection.end();
 
+        await tempConnection.end();
         console.log("Banco de dados e tabelas verificados/criados com sucesso.");
     } catch (error) {
         console.error("Erro ao criar o banco ou as tabelas:", error);
         throw error;
     }
 }
+
+
+
