@@ -97,8 +97,8 @@ export async function initializeDatabase() {
                 SubTotal DECIMAL(18,2),
                 Status ENUM('Aberto', 'Finalizado', 'Pendente'),
                 DataCad TIMESTAMP,
-                IdCliente INT,
-                FOREIGN KEY (IdCliente) REFERENCES clientes(id)
+                ClienteId INT,
+                FOREIGN KEY (ClienteId) REFERENCES clientes(id)
             );
         `);
 
