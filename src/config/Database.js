@@ -42,6 +42,7 @@ export { connection };
 
 export async function initializeDatabase() {
     console.log("Inicializando o banco de dados e tabelas...");
+
     try {
         const tempConnection = await mysql.createConnection({
             host: process.env.DB_HOST,
@@ -51,23 +52,19 @@ export async function initializeDatabase() {
             ssl: { rejectUnauthorized: false }
         });
 
-
         const dbName = process.env.DB_DATABASE || 'S2_R4_at1';
-
 
         await tempConnection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\`;`);
         await tempConnection.query(`USE \`${dbName}\`;`);
-
 
         await tempConnection.query(`
             CREATE TABLE IF NOT EXISTS categorias (
                 id INT PRIMARY KEY AUTO_INCREMENT,
                 nome VARCHAR(45) NOT NULL,
                 descricao VARCHAR(100) NULL,
-                DataCad timestamp
+                DataCad TIMESTAMP
             );
         `);
-
 
         await tempConnection.query(`
             CREATE TABLE IF NOT EXISTS produtos (
@@ -75,20 +72,9 @@ export async function initializeDatabase() {
                 nome VARCHAR(45) NOT NULL,
                 valor DECIMAL(10,2) NOT NULL,
                 caminhoImg VARCHAR(250),
-                DataCad timestamp,
+                DataCad TIMESTAMP,
                 idCategoria INT,
                 FOREIGN KEY (idCategoria) REFERENCES categorias(id)
-            );
-        `);
-
-        await tempConnection.query(`
-            CREATE TABLE IF NOT EXISTS pedidos (
-                id INT PRIMARY KEY AUTO_INCREMENT,
-                SubTotal decimal(18,2),
-                Status enum('Aberto', 'Finalizado', 'Pendente'),
-                DataCad timestamp,
-                IdCliente INT,
-                FOREIGN KEY (IdCliente) REFERENCES clientes(id)
             );
         `);
 
@@ -97,15 +83,26 @@ export async function initializeDatabase() {
                 id INT PRIMARY KEY AUTO_INCREMENT,
                 Nome VARCHAR(45),
                 cpf CHAR(11),
-                DataCad timestamp,
+                DataCad TIMESTAMP
+            );
+        `);
+
+        await tempConnection.query(`
+            CREATE TABLE IF NOT EXISTS pedidos (
+                id INT PRIMARY KEY AUTO_INCREMENT,
+                SubTotal DECIMAL(18,2),
+                Status ENUM('Aberto', 'Finalizado', 'Pendente'),
+                DataCad TIMESTAMP,
+                IdCliente INT,
+                FOREIGN KEY (IdCliente) REFERENCES clientes(id)
             );
         `);
 
         await tempConnection.query(`
             CREATE TABLE IF NOT EXISTS itens_pedidos (
                 id INT PRIMARY KEY AUTO_INCREMENT,
-                Quantidade decimal(18,2),
-                valorItem decimal(18,2),
+                Quantidade DECIMAL(18,2),
+                valorItem DECIMAL(18,2),
                 PedidoId INT,
                 ProdutoId INT,
                 FOREIGN KEY (PedidoId) REFERENCES pedidos(id),
@@ -137,8 +134,8 @@ export async function initializeDatabase() {
             );
         `);
 
-
         await tempConnection.end();
+
         console.log("Banco de dados e tabelas verificados/criados com sucesso.");
     } catch (error) {
         console.error("Erro ao criar o banco ou as tabelas:", error);
